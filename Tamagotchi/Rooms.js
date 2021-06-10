@@ -16,6 +16,7 @@ export default class Rooms {
   ) {
     push();
     if (this.state === "kitchen") {
+      //image(pictures["kitchen"]["pic"], this.x, this.y, this.width, this.height);
       image(kitchenPic, this.x, this.y, this.width, this.height);
     } else if (this.state === "bedroom") {
       image(bedroomPic, this.x, this.y, this.width, this.height);
