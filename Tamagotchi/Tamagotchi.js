@@ -17,4 +17,15 @@ export default class Tamagotchi {
     }
     pop();
   }
+  hitTest() {
+    if (
+      mouseIsPressed &&
+      mouseX >= this.x - this.width / 2 &&
+      mouseX <= this.x + this.width / 2 &&
+      mouseY >= this.y - this.height / 2 &&
+      mouseY <= this.y + this.height / 2
+    ) {
+      return true;
+    }
+  }
 }
