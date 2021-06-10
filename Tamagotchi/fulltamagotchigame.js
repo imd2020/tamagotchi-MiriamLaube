@@ -9,28 +9,31 @@ import Water from "./Water.js";
 import Bar from "./Bar.js";
 import Poo from "./Poo.js";
 import Food from "./Food.js";
-let cinnamonRoll = new Food(100, 350);
+
+//variables
+let sadOrHappy = true;
+let visible = true;
+let time = [0];
+let x = [];
+let y = [];
+let foodWord = [];
+let word = [];
+let finalFoodWord = "";
+let bunnystate = "happy";
+let state = "funroom";
+let bunnyX = 0;
+let bunnyY = 0;
+let cinnamonRollsNumber = 0;
+let radius = 80;
+let yButton = 670;
+
+// init objects
+let cinnamonRoll = new Food(100, 350, 25, 300, 0, false);
 let tired = new Parameter(135, 750, 100);
 let hungry = new Parameter(135 + 150, 750, 100);
 let poop = new Parameter(135 + 150 * 2, 750, 100);
 let happy = new Parameter(135 + 150 * 3, 750, 100);
 let thirsty = new Parameter(135 + 150 * 4, 750, 100);
-let sadOrHappy = true;
-let poopPic = loadImage("pooPicture.png");
-let time = [0];
-let visible = true;
-let x = [];
-let y = [];
-let bunnystate = "happy";
-let bunnyX = 0;
-let bunnyY = 0;
-let cinnamonRollsNumber = 0;
-let bar = new Bar(700, 130, 20, 20);
-let water = new Water(240, 130, 270, 130, 400, false);
-let waterPicture = loadImage("drinkPicture.jpg");
-let radius = 80;
-let yButton = 670;
-let state = "funroom";
 let sleepButton = new Buttons(150, yButton, radius);
 let eatButton = new Buttons(300, yButton, radius);
 let poopButton = new Buttons(450, yButton, radius);
@@ -39,6 +42,12 @@ let drinkButton = new Buttons(900, 500, 100);
 let cinnamonRolls = new Buttons(250, 450, 100);
 let lampCord = new LampCord(750, 450, 45, 450, 510, true, 80, 135);
 let ball = new Ball(300, 450, 250, 300, 0, true, 10);
+let bar = new Bar(700, 130, 20, 20);
+let water = new Water(240, 130, 270, 130, 400, false);
+
+//load pictures
+let poopPic = loadImage("pooPicture.png");
+let waterPicture = loadImage("drinkPicture.jpg");
 let bathroomPicture = loadImage("bathroomPicture.png");
 let kitchenPicture = loadImage("kitchenPicture.jpg");
 let bedroomPicture = loadImage("bedroomPicture.jpg");
@@ -51,31 +60,12 @@ let poopButtonPicture = loadImage("poopButton.png");
 let cordPicture = loadImage("lampCordPicture.png");
 let ballPicture = loadImage("ballPicture.png");
 let lampshadePicture = loadImage("lampshade.png");
-let pooPicture = loadImage("pooPicture.png");
 let cuttingBoardPicture = loadImage("cuttingBoardPicture.jpg");
 let drinkingPicture = loadImage("drinkingPicture.jpg");
 let sleepyBunny = loadImage("sleepyBunny.png");
 let happyBunny = loadImage("happyBunny.png");
 let sadBunny = loadImage("sadBunny.png");
 let cinnamon = loadImage("cinnamon.png");
-//cuttingboard
-let foodWord = [];
-let finalFoodWord = "";
-let typesOfFood = [
-  "cherry",
-  "potato",
-  "salad",
-  "cake",
-  "apple",
-  "bread",
-  "nuts",
-  "banana",
-  "tomato",
-  "sushi",
-];
-let randomNumber = [];
-let word = [];
-let countup = 0;
 
 function keyPressed() {
   foodWord.push(key);
@@ -95,30 +85,6 @@ function keyPressed() {
 
 function draw() {
   push();
-
-  //bunny
-  let bunny = new Tamagotchi(bunnyX, bunnyY, 1040, 800, bunnystate);
-  if (sadOrHappy === true) {
-    if (
-      tired.parameter <= 30 ||
-      hungry.parameter <= 30 ||
-      poop.parameter <= 30 ||
-      happy.parameter <= 30 ||
-      thirsty.parameter <= 30
-    ) {
-      bunnystate = "sad";
-    } else if (
-      tired.parameter >= 30 ||
-      hungry.paramteter >= 30 ||
-      poop.paramteter >= 30 ||
-      happy.paramteter >= 30 ||
-      thirsty.paramteter >= 30
-    ) {
-      bunnystate = "happy";
-    }
-  } else if (sadOrHappy === false) {
-    bunnystate = "tired";
-  }
 
   //Button
   clear();
@@ -143,6 +109,7 @@ function draw() {
       state = "drinking";
     }
   }
+
   //roooms
   let room = new Rooms(0, 0, state, 1000, 600);
   room.display(
@@ -153,7 +120,33 @@ function draw() {
     cuttingBoardPicture,
     drinkingPicture
   );
+
+  //bunny
+  let bunny = new Tamagotchi(bunnyX, bunnyY, 1040, 800, bunnystate);
+  if (sadOrHappy === true) {
+    if (
+      tired.parameter <= 30 ||
+      hungry.parameter <= 30 ||
+      poop.parameter <= 30 ||
+      happy.parameter <= 30 ||
+      thirsty.parameter <= 30
+    ) {
+      bunnystate = "sad";
+    } else if (
+      tired.parameter >= 30 ||
+      hungry.paramteter >= 30 ||
+      poop.paramteter >= 30 ||
+      happy.paramteter >= 30 ||
+      thirsty.paramteter >= 30
+    ) {
+      bunnystate = "happy";
+    }
+  } else if (sadOrHappy === false) {
+    bunnystate = "tired";
+  }
   bunny.display(happyBunny, sadBunny, sleepyBunny);
+
+  //parameter
   sleepButton.display(sleepButtonPicture);
   eatButton.display(eatButtonPicture);
   poopButton.display(poopButtonPicture);
@@ -179,7 +172,9 @@ function draw() {
     if (thirsty.parameter >= 0) {
       thirsty.parameter = thirsty.parameter - 1;
     }
-  } //sleep
+  }
+
+  //function of the rooms
   if (state === "bedroom") {
     sadOrHappy = false;
     bunnyX = 100;
@@ -217,18 +212,21 @@ function draw() {
       }
     }
   }
-  //drinking
   if (state === "kitchen") {
     if (cinnamonRollsNumber >= 1) {
-      if (cinnamonRoll.hitTest()) {
-        cinamon.display(cinnamon);
+      cinnamonRoll.hitTestFeed();
+      cinnamonRoll.display(cinnamon);
+      if (bunny.hitTest) {
+        cinnamonRoll.stateShow = false;
+        cinnamonRollsNumber--;
       }
     }
+
     bunnyX = 600;
     bunnyY = 300;
     drinkButton.display(drinkButtonPicture);
     textSize(80);
-    text(cinnamonRollsNumber, 50, 400);
+    text(cinnamonRoll.number, 50, 400);
     water.y = 130;
     water.height = 270;
   }
@@ -245,9 +243,9 @@ function draw() {
     }
   }
   if (state === "cuttingboard") {
-    if (randomNumber.length < 1) {
-      randomNumber.push(Math.ceil(random(-1, 9)));
-      word.push(typesOfFood[randomNumber[0]]);
+    if (cinnamonRoll.randomNumber.length < 1) {
+      cinnamonRoll.randomNumber.push(Math.ceil(random(-1, 9)));
+      word.push(cinnamonRoll.foods[cinnamonRoll.randomNumber[0]]);
     }
     image(cuttingBoardPicture, 0, 0, 1000, 600);
     textSize(100);
@@ -260,11 +258,11 @@ function draw() {
     if (keyIsDown(13)) {
       if (finalFoodWord === word[0]) {
         fill(0, 255, 0);
-        randomNumber.pop();
+        cinnamonRoll.randomNumber.pop();
         word.pop();
         foodWord.splice(0, foodWord.length);
         finalFoodWord = "";
-        cinnamonRollsNumber++;
+        cinnamonRoll.number++;
       }
     }
   }
