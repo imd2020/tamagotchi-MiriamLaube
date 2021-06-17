@@ -9,21 +9,33 @@ export default class Tamagotchi {
   display(happyBun, sadBun, tiredBun) {
     push();
     if (this.state === "happy") {
-      image(happyBun, this.x - 520, this.y - 400, this.width, this.height);
+      image(happyBun, this.x, this.y, this.width, this.height);
     } else if (this.state === "sad") {
-      image(sadBun, this.x - 250, this.y - 200, this.width, this.height);
+      image(
+        sadBun,
+        this.x - 20,
+        this.y + 150,
+        this.width + 60,
+        this.height - 150
+      );
     } else if (this.state === "tired") {
-      image(tiredBun, this.x - 200, this.y - 200, this.width, this.height);
+      image(
+        tiredBun,
+        this.x + 120,
+        this.y + 50,
+        this.width + 200,
+        this.height - 200
+      );
     }
     pop();
   }
-  hitTest() {
+  hitTest(x, y) {
     if (
       mouseIsPressed &&
-      mouseX >= this.x - this.width / 2 &&
-      mouseX <= this.x + this.width / 2 &&
-      mouseY >= this.y - this.height / 2 &&
-      mouseY <= this.y + this.height / 2
+      mouseX >= x &&
+      mouseX <= x + 200 &&
+      mouseY >= y &&
+      mouseY <= y + 500
     ) {
       return true;
     }
