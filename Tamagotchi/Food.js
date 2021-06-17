@@ -32,6 +32,7 @@ export default class Food {
   }
   hitTest() {
     if (
+      mouseIsPressed &&
       mouseX >= this.x &&
       mouseX <= this.x + 150 &&
       mouseY >= this.y &&
@@ -49,7 +50,7 @@ export default class Food {
       mouseY >= this.yFeed &&
       mouseY <= this.yFeed + 125
     ) {
-      this.stateShow = true;
+      return true;
     }
     pop();
   }
