@@ -9,6 +9,7 @@ import Water from "./Water.js";
 import Bar from "./Bar.js";
 import Poo from "./Poo.js";
 import Food from "./Food.js";
+import Age from "./Age.js";
 
 //variables
 let sadOrHappy = true;
@@ -21,6 +22,7 @@ let word = [];
 let finalFoodWord = "";
 let bunnystate = "happy";
 let state = "funroom";
+let age = 0;
 let bunnyX = 0;
 let bunnyY = 0;
 let cinnamonRollsNumber = 0;
@@ -28,7 +30,8 @@ let radius = 80;
 let yButton = 670;
 
 // init objects
-let cinnamonRoll = new Food(100, 350, 25, 300, 0, false);
+let ageText = new Age();
+let cinnamonRoll = new Food(200, 400, 25, 300, 0, false);
 let tired = new Parameter(135, 750, 100);
 let hungry = new Parameter(135 + 150, 750, 100);
 let poop = new Parameter(135 + 150 * 2, 750, 100);
@@ -85,10 +88,10 @@ function keyPressed() {
 
 function draw() {
   push();
-
-  //Button
   clear();
   background(255);
+  ageText.ageCounter(age, frameCount);
+  //Button
   if (sleepButton.hitTest()) {
     state = "bedroom";
   }
@@ -102,7 +105,7 @@ function draw() {
     state = "funroom";
   }
   if (state === "kitchen") {
-    if (cinnamonRolls.hitTest()) {
+    if (cinnamonRoll.hitTestFeed()) {
       state = "cuttingboard";
     }
     if (drinkButton.hitTest()) {
@@ -122,7 +125,8 @@ function draw() {
   );
 
   //bunny
-  let bunny = new Tamagotchi(bunnyX, bunnyY, 1040, 800, bunnystate);
+  let bunny = new Tamagotchi(bunnyX, bunnyY, 200, 500, bunnystate);
+
   if (sadOrHappy === true) {
     if (
       tired.parameter <= 30 ||
@@ -144,6 +148,7 @@ function draw() {
   } else if (sadOrHappy === false) {
     bunnystate = "tired";
   }
+
   bunny.display(happyBunny, sadBunny, sleepyBunny);
 
   //parameter
@@ -157,19 +162,19 @@ function draw() {
   happy.display();
   thirsty.display();
   if (frameCount % 100 === 0) {
-    if (tired.parameter >= 0) {
+    if (tired.parameter > 0) {
       tired.parameter = tired.parameter - 1;
     }
-    if (hungry.parameter >= 0) {
+    if (hungry.parameter > 0) {
       hungry.parameter = hungry.parameter - 1;
     }
-    if (poop.parameter >= 0) {
+    if (poop.parameter > 0) {
       poop.parameter = poop.parameter - 1;
     }
-    if (happy.parameter >= 0) {
+    if (happy.parameter > 0) {
       happy.parameter = happy.parameter - 1;
     }
-    if (thirsty.parameter >= 0) {
+    if (thirsty.parameter > 0) {
       thirsty.parameter = thirsty.parameter - 1;
     }
   }
@@ -197,9 +202,8 @@ function draw() {
   //fun
   if (state === "funroom") {
     bunnyX = 600;
-    bunnyY = 300;
+    bunnyY = 100;
     ball.display(ballPicture);
-    ball.hitTest();
     if (
       mouseIsPressed &&
       tired.parameter >= 30 &&
@@ -207,23 +211,33 @@ function draw() {
       poop.parameter >= 30 &&
       thirsty.parameter >= 30
     ) {
+      ball.hitTest();
       if (frameCount % 50 === 0) {
         happy.parameter = happy.parameter + 1;
       }
     }
   }
   if (state === "kitchen") {
-    if (cinnamonRollsNumber >= 1) {
-      cinnamonRoll.hitTestFeed();
+    console.log(cinnamonRoll.number);
+    if (cinnamonRoll.number > 0) {
+      if (cinnamonRoll.hitTest) {
+        cinnamonRoll.stateShow = true;
+      }
       cinnamonRoll.display(cinnamon);
-      if (bunny.hitTest) {
+      if (bunny.hitTest(bunnyX, bunnyY) && cinnamonRoll.stateShow === true) {
+        console.log("Hi");
         cinnamonRoll.stateShow = false;
-        cinnamonRollsNumber--;
+        cinnamonRoll.number = cinnamonRoll.number - 1;
+        if (hungry.parameter < 90) {
+          hungry.parameter = hungry.parameter + 10;
+        } else {
+          hungry.parameter = 100;
+        }
       }
     }
 
     bunnyX = 600;
-    bunnyY = 300;
+    bunnyY = 100;
     drinkButton.display(drinkButtonPicture);
     textSize(80);
     text(cinnamonRoll.number, 50, 400);
@@ -268,7 +282,7 @@ function draw() {
   }
   if (state === "bathroom") {
     bunnyX = 600;
-    bunnyY = 300;
+    bunnyY = 100;
     if (poop.parameter <= 75) {
       if (x.length <= 1) {
         x.push(random(50, 700));
