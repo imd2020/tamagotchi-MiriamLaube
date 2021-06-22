@@ -7,6 +7,7 @@ export default class Bar {
   }
   display(yLine) {
     push();
+
     fill(255);
     strokeWeight(3);
     rect(this.x, this.y, 100, 270);
@@ -18,6 +19,7 @@ export default class Bar {
   }
   hitTest(yLine) {
     push();
+
     if (mouseIsPressed && yLine >= this.y + 115 && yLine <= this.y + 155) {
       return true;
     }
