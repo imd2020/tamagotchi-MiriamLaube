@@ -43,6 +43,7 @@ export default class Food {
   }
   hitTestFeed() {
     push();
+
     if (
       mouseIsPressed &&
       mouseX >= this.xFeed &&
