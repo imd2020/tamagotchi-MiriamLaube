@@ -19,6 +19,7 @@ export default class Ball {
   }
   display(picture) {
     push();
+
     imageMode(CENTER);
     translate(this.x, this.y);
     rotate(this.rotation);
