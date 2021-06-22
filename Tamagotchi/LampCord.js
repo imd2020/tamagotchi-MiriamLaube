@@ -11,6 +11,7 @@ export default class LampCord {
   }
   display(picture, lampshade) {
     push();
+
     image(picture, this.x, this.y, 0, 0);
     image(lampshade, 0, 0, 1000, 600);
 
@@ -18,6 +19,7 @@ export default class LampCord {
   }
   move() {
     push();
+
     if (
       mouseIsPressed &&
       mouseX >= this.x + this.xDistance - this.radius &&
