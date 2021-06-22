@@ -6,12 +6,14 @@ export default class Buttons {
   }
   display(picture) {
     push();
+
     imageMode(CENTER);
     image(picture, this.x, this.y, this.radius, this.radius);
     pop();
   }
   hitTest() {
     push();
+
     if (
       mouseIsPressed &&
       mouseX >= this.x - this.radius &&
