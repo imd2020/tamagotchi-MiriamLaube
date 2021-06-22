@@ -6,6 +6,7 @@ export default class Poo {
   }
   display(time, picture) {
     push();
+
     if (time === 0) {
       this.visible = true;
     }
@@ -19,6 +20,7 @@ export default class Poo {
   }
   hitTest() {
     push();
+
     if (
       mouseIsPressed &&
       mouseX >= this.x &&
