@@ -1,8 +1,8 @@
 export default class Water {
-  constructor(x, y, height, destinationTop, destinationBottom, stateRise) {
+  constructor(x, y, waterHeight, destinationTop, destinationBottom, stateRise) {
     this.x = x;
     this.y = y;
-    this.height = height;
+    this.waterHeight = waterHeight;
     this.destinationTop = destinationTop;
     this.destinationBottom = destinationBottom;
     this.stateRise = stateRise;
@@ -10,7 +10,7 @@ export default class Water {
   display() {
     push();
     fill(51, 153, 255);
-    rect(this.x, this.y, 190, this.height);
+    rect(this.x, this.y, 190, this.waterHeight);
     ellipse(this.x + 95, this.y, 190, 30);
     ellipse(this.x + 95, 400, 190, 30);
     pop();
@@ -18,7 +18,7 @@ export default class Water {
   rise() {
     if (this.y >= this.destinationTop && this.stateRise === true) {
       this.y = this.y - 5;
-      this.height = this.height + 5;
+      this.waterHeight = this.waterHeight + 5;
       if (this.y === this.destinationTop) {
         console.log("ich mach was rise");
         this.stateRise = false;
@@ -28,7 +28,7 @@ export default class Water {
   fall() {
     if (this.y <= this.destinationBottom && this.stateRise === false) {
       this.y = this.y + 5;
-      this.height = this.height - 5;
+      this.waterHeight = this.waterHeight - 5;
       if (this.y === this.destinationBottom) {
         console.log("ich mach was fall");
         this.stateRise = true;
