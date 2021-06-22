@@ -3,7 +3,7 @@ export default class Age {
     this.x = 815;
     this.y = 670;
   }
-  ageCounter(frame) {
+  ageCounter(age) {
     textSize(24);
     fill(255);
     stroke(0);
@@ -12,8 +12,5 @@ export default class Age {
     textSize(16);
     strokeWeight(3.5);
     text("Try to reach the age of 12!", this.x, this.y + 50);
-    if (age <= 12 && this.frame % 300 === 0) {
-      age = age + 1;
-    }
   }
 }
