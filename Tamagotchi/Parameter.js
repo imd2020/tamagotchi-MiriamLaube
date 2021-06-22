@@ -1,11 +1,12 @@
 export default class Parameter {
-  constructor(x, y, parameter) {
+  constructor(x) {
     this.x = x;
-    this.y = y;
-    this.parameter = parameter;
+    this.y = 750;
+    this.parameter = 100;
   }
   display() {
     push();
+
     text(this.parameter, this.x, this.y);
     pop();
   }
