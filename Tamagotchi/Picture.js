@@ -1,18 +1,19 @@
 export default class Picture {
-  constructor(x, y, height, width) {
+  constructor(x, y, waterHeight, waterwidth) {
     this.x = x;
     this.y = y;
-    this.height = height;
-    this.with = width;
+    this.waterHeight = waterHeight;
+    this.with = waterwidth;
   }
   happy(picture) {
     push();
+
     image(
       picture,
       (this.x = this.x - 250),
       (this.y = this.y - 250),
-      (this.width = 520),
-      (this.height = 400)
+      (this.waterwidth = 520),
+      (this.waterHeight = 400)
     );
     pop();
   }
