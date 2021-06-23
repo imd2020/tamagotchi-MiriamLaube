@@ -42,6 +42,7 @@ let lampCord = new LampCord(750, 450, 45, 450, 510, true, 80, 135);
 let ball = new Ball(300, 450, 250, 300, 0, true, 10);
 let bar = new Bar(700, 130, 20, 20);
 let water = new Water(240, 130, 270, 130, 400, false);
+let poopArray = [];
 
 //load pictures
 let poopPic = loadImage("pictures/pooPicture.png");
@@ -65,6 +66,10 @@ let happyBunny = loadImage("pictures/happyBunny.png");
 let sadBunny = loadImage("pictures/sadBunny.png");
 let cinnamon = loadImage("pictures/cinnamon.png");
 
+//https://p5js.org/examples/objects-array-of-objects.html und Hilfe von Herr Toepper
+for (let i = 0; i < 5; i++) {
+  poopArray.push(new Poo());
+}
 
 function keyPressed() {
   food.word.push(key);
@@ -220,7 +225,7 @@ function draw() {
         thirsty.parameter >= 30
       ) {
         ball.hitTest();
-        if (frameCount % 50 === 0) {
+        if (frameCount % 50 === 0 && happy.parameter < 100) {
           happy.parameter = happy.parameter + 1;
         }
       } else if (
@@ -304,23 +309,15 @@ function draw() {
     if (state.room === "bathroom") {
       bunnyCoordinate.x = 600;
       bunnyCoordinate.y = 100;
-      if (poop.parameter <= 75) {
-        if (bathroomCoordinat.x.length <= 1) {
-          bathroomCoordinat.x.push(random(50, 700));
-          bathroomCoordinat.y.push(random(450, 550));
-        }
-        time[0] = time[0] + 1;
-        if (mouseIsPressed && time[0] >= 100) {
-          time[0] = 0;
-        }
-        let poop = new Poo(x[0], y[0], visible);
-        poop.display(time[0], poopPic);
-        if (poop.hitTest) {
-          poop.parameter = poop.parameter + 25;
-        }
-        if (time > 100) {
-          bathroomCoordinat.y.splice(0, 1, random(450, 550));
-          bathroomCoordinat.x.splice(0, 1, random(50, 950));
+      let poopNumber = Math.round((100 - poop.parameter) / 20);
+      //https://p5js.org/examples/objects-array-of-objects.html und Hilfe von Herr Toepper
+      //for (let i = 0; i < poopArray.length; i++) {
+      for (let i = 0; i < poopNumber; i++) {
+        poopArray[i].display(poopPic);
+        poopArray[i].hitTest();
+        if (poopArray[i].hitTest() && poop.parameter <= 80) {
+          poopArray[i].visible = false;
+          poop.parameter = poop.parameter + 20;
         }
       }
     }
