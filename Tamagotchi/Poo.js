@@ -1,26 +1,19 @@
 export default class Poo {
-  constructor(x, y, visible) {
-    this.y = y;
-    this.x = x;
-    this.visible = visible;
+  constructor() {
+    this.y = random(450, 550);
+    this.x = random(50, 700);
+    this.visible = true;
   }
-  display(time, picture) {
+  display(picture) {
     push();
 
-    if (time === 0) {
-      this.visible = true;
-    }
-    if (time <= 100 && this.visible === true) {
+    if (this.visible === true) {
       image(picture, this.x - 50, this.y - 50, 100, 100);
-      if (time >= 100) {
-        this.visible = false;
-      }
-      pop();
     }
+    pop();
   }
   hitTest() {
     push();
-
     if (
       mouseIsPressed &&
       mouseX >= this.x &&
