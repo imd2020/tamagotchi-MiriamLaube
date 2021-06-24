@@ -1,10 +1,11 @@
 export default class Game {
-  constructor(state) {
+  constructor(state, resize) {
+    this.resize = resize;
     this.state = state;
     this.x = 0;
     this.y = 0;
-    this.gameWidth = 1000;
-    this.gameHeight = 600;
+    this.gameWidth = 1000 * this.resize;
+    this.gameHeight = 600 * this.resize;
     this.sequence = [];
     this.i = 0;
     this.tutorial1 = loadImage("pictures/tutorial/bunnyTutorual.png");
@@ -38,17 +39,23 @@ export default class Game {
         this.tutorial10,
       ];
 
-      image(this.sequence[this.i], this.x, this.y, this.gameWidth, this.gameHeight);
+      image(
+        this.sequence[this.i],
+        this.x,
+        this.y,
+        this.gameWidth,
+        this.gameHeight
+      );
       fill(255);
       stroke(0);
-      strokeWeight(3);
+      strokeWeight(3 * this.resize);
       triangle(
-        this.gameWidth - 100,
-        this.gameHeight - 100,
-        this.gameWidth - 50,
-        this.gameHeight - 75,
-        this.gameWidth - 100,
-        this.gameHeight - 50
+        this.gameWidth - 100 * this.resize,
+        this.gameHeight - 100 * this.resize,
+        this.gameWidth - 50 * this.resize,
+        this.gameHeight - 75 * this.resize,
+        this.gameWidth - 100 * this.resize,
+        this.gameHeight - 50 * this.resize
       );
     }
 
@@ -69,10 +76,10 @@ export default class Game {
     push();
 
     if (
-      mouseX >= x - 100 &&
-      mouseX <= x + 100 &&
-      mouseY >= 420 - 100 &&
-      mouseY <= 420 + 100
+      mouseX >= x * this.resize - 100 * this.resize &&
+      mouseX <= x * this.resize + 100 * this.resize &&
+      mouseY >= 420 * this.resize - 100 * this.resize &&
+      mouseY <= 420 * this.resize + 100 * this.resize
     ) {
       return true;
     }
@@ -82,10 +89,10 @@ export default class Game {
     push();
 
     if (
-      mouseX >= this.gameWidth - 100 &&
-      mouseX <= this.gameWidth - 50 &&
-      mouseY >= this.gameHeight - 100 &&
-      mouseY <= this.gameHeight - 50
+      mouseX >= this.gameWidth - 100 * this.resize &&
+      mouseX <= this.gameWidth - 50 * this.resize &&
+      mouseY >= this.gameHeight - 100 * this.resize &&
+      mouseY <= this.gameHeight - 50 * this.resize
     ) {
       return true;
     }
