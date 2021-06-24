@@ -1,8 +1,9 @@
 export default class Buttons {
-  constructor(x, y, radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
+  constructor(x, y, radius, resize) {
+    this.resize = resize;
+    this.x = x * this.resize;
+    this.y = y * this.resize;
+    this.radius = radius * this.resize;
   }
   display(picture) {
     push();
