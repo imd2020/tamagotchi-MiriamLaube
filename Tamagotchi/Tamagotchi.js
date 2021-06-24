@@ -1,42 +1,49 @@
 export default class Tamagotchi {
-  constructor(x, y, tamagotchiWidth, tamagotchiHeight, state) {
-    this.x = x;
-    this.y = y;
-    this.tamagotchiHeight = tamagotchiHeight;
-    this.tamagotchiWidth = tamagotchiWidth;
+  constructor(x, y, tamagotchiWidth, tamagotchiHeight, resize, state) {
+    this.resize = resize;
+    this.x = x * this.resize;
+    this.y = y * this.resize;
+    this.tamagotchiHeight = tamagotchiHeight * this.resize;
+    this.tamagotchiWidth = tamagotchiWidth * this.resize;
     this.state = state;
   }
   display(happyBun, sadBun, tiredBun) {
     push();
 
     if (this.state === "happy") {
-      image(happyBun, this.x, this.y, this.tamagotchiWidth, this.tamagotchiHeight);
+      image(
+        happyBun,
+        this.x,
+        this.y,
+        this.tamagotchiWidth,
+        this.tamagotchiHeight
+      );
     } else if (this.state === "sad") {
       image(
         sadBun,
-        this.x - 20,
-        this.y + 150,
-        this.tamagotchiWidth + 60,
-        this.tamagotchiHeight - 150
+        this.x - 20 * this.resize,
+        this.y + 150 * this.resize,
+        this.tamagotchiWidth + 60 * this.resize,
+        this.tamagotchiHeight - 150 * this.resize
       );
     } else if (this.state === "tired") {
       image(
         tiredBun,
-        this.x + 120,
-        this.y + 50,
-        this.tamagotchiWidth + 200,
-        this.tamagotchiHeight - 200
+        this.x - 420 * this.resize,
+        this.y + 100 * this.resize,
+        this.tamagotchiWidth + 200 * this.resize,
+        this.tamagotchiHeight - 200 * this.resize
       );
     }
     pop();
   }
-  hitTest(x, y) {
+  hitTest() {
     if (
       mouseIsPressed &&
-      mouseX >= x &&
-      mouseX <= x + 200 &&
-      mouseY >= y &&
-      mouseY <= y + 500
+      mouseX >= this.x &&
+      mouseX <= this.x + 200 * this.resize &&
+      mouseY >= this.y &&
+      mouseY <= this.y + 500 * this.resize
     ) {
       return true;
     }
