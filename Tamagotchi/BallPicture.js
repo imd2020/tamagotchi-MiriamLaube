@@ -37,7 +37,7 @@ export default class Ball {
   }
   right() {
     if (this.x <= this.destinationRight && this.stateLeft === false) {
-      this.x = this.x + 1;
+      this.x = this.x + 1 * this.resize;
       this.rotation = this.rotation + 10;
       if (this.x === this.destinationRight) {
         this.stateLeft = true;
