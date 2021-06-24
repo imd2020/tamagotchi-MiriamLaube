@@ -11,38 +11,40 @@ import Poo from "./Poo.js";
 import Food from "./Food.js";
 import Age from "./Age.js";
 import Game from "./Game.js";
+//import gsap from "./gsap.min.js";
 
 //variables
+let resize = 2.3;
 let sadOrHappy = true;
-let visible = true;
-let time = [0];
-let bathroomCoordinat = { x: [], y: [] };
 let food = { word: [], list: [] };
 let finalFoodWord = "";
 let state = { bunny: "happy", room: "funroom" };
 let age = 0;
-let bunnyCoordinate = { x: 0, y: 0 };
 let button = { y: 670, radius: 80 };
 
 // init objects
-let game = new Game("start");
-let ageText = new Age();
-let cinnamonRoll = new Food(200, 400, 25, 300, 0, false);
-let tired = new Parameter(135);
-let hungry = new Parameter(135 + 150);
-let poop = new Parameter(135 + 150 * 2);
-let happy = new Parameter(135 + 150 * 3);
-let thirsty = new Parameter(135 + 150 * 4);
-let sleepButton = new Buttons(150, button.y, button.radius);
-let eatButton = new Buttons(300, button.y, button.radius);
-let poopButton = new Buttons(450, button.y, button.radius);
-let funButton = new Buttons(600, button.y, button.radius);
-let drinkButton = new Buttons(900, 500, 100);
-let lampCord = new LampCord(750, 450, 45, 450, 510, true, 80, 135);
-let ball = new Ball(300, 450, 250, 300, 0, true, 10);
-let bar = new Bar(700, 130, 20, 20);
-let water = new Water(240, 130, 270, 130, 400, false);
+let game = new Game("start", resize);
+let ageText = new Age(resize);
+let cinnamonRoll = new Food(200, 400, 25, 300, 0, false, resize);
+let tired = new Parameter(135, resize);
+let hungry = new Parameter(135 + 150, resize);
+let poop = new Parameter(135 + 150 * 2, resize);
+let happy = new Parameter(135 + 150 * 3, resize);
+let thirsty = new Parameter(135 + 150 * 4, resize);
+let sleepButton = new Buttons(150, button.y, button.radius, resize);
+let eatButton = new Buttons(300, button.y, button.radius, resize);
+let poopButton = new Buttons(450, button.y, button.radius, resize);
+let funButton = new Buttons(600, button.y, button.radius, resize);
+let drinkButton = new Buttons(900, 500, 100, resize);
+let lampCord = new LampCord(750, 450, 80, 450, 510, true, 80, 135, resize);
+let ball = new Ball(300, 450, 250, 300, 0, true, 10, resize);
+let bar = new Bar(700, 130, 20, 20, resize);
+let water = new Water(240, 130, 270, 130, 400, false, resize);
 let poopArray = [];
+const moonX = {
+  x: 300,
+  y: 200,
+};
 
 //load pictures
 let poopPic = loadImage("pictures/pooPicture.png");
@@ -65,10 +67,11 @@ let sleepyBunny = loadImage("pictures/sleepyBunny.png");
 let happyBunny = loadImage("pictures/happyBunny.png");
 let sadBunny = loadImage("pictures/sadBunny.png");
 let cinnamon = loadImage("pictures/cinnamon.png");
+let moon = loadImage("moon.png");
 
 //https://p5js.org/examples/objects-array-of-objects.html und Hilfe von Herr Toepper
 for (let i = 0; i < 5; i++) {
-  poopArray.push(new Poo());
+  poopArray.push(new Poo(resize));
 }
 
 function keyPressed() {
@@ -87,13 +90,12 @@ function keyPressed() {
   finalFoodWord = food.word.join("");
 }
 window.keyPressed = keyPressed;
-
 function draw() {
   clear();
 
   game.display();
   if (game.state === "game") {
-    rect(0, 0, 1000, 800);
+    //rect(0, 0, 1000 * resize, 800 * resize);
     if (age < 12 && frameCount % 1200 === 0) {
       age = age + 1;
     }
@@ -121,7 +123,7 @@ function draw() {
     }
 
     //roooms
-    let room = new Rooms(0, 0, state.room, 1000, 600);
+    let room = new Rooms(0, 0, state.room, 1000, 600, resize);
     room.display(
       kitchenPicture,
       bedroomPicture,
@@ -132,13 +134,7 @@ function draw() {
     );
 
     //bunny
-    let bunny = new Tamagotchi(
-      bunnyCoordinate.x,
-      bunnyCoordinate.y,
-      200,
-      500,
-      state.bunny
-    );
+    let bunny = new Tamagotchi(600, 100, 200, 500, resize, state.bunny);
 
     if (sadOrHappy === true) {
       if (
@@ -195,17 +191,16 @@ function draw() {
     //function of the rooms
     if (state.room === "bedroom") {
       sadOrHappy = false;
-      bunnyCoordinate.x = 100;
-      bunnyCoordinate.y = 150;
+
       lampCord.display(cordPicture, lampshadePicture);
-      lampCord.move();
+      lampCord.move(moon);
       if (lampCord.day === false) {
         if (tired.parameter < 100 && frameCount % 50 === 0) {
           tired.parameter = tired.parameter + 1;
         }
-
+        image(moon, moonX.x, moonX.y, 100, 100);
         fill(60, 60, 60, 63);
-        rect(0, 0, 1000, 600);
+        rect(0, 0, 1000 * resize, 600 * resize);
       }
       //if your are not in the bedroom the light is turned on.
     } else if (state.room != "bedroom") {
@@ -214,8 +209,7 @@ function draw() {
     }
     //fun
     if (state.room === "funroom") {
-      bunnyCoordinate.x = 600;
-      bunnyCoordinate.y = 100;
+      strokeWeight(5 * resize);
       ball.display(ballPicture);
       if (
         mouseIsPressed &&
@@ -238,7 +232,7 @@ function draw() {
         fill(255);
         stroke(0);
         strokeWeight(5);
-        text("I don't want to play", 200, 400);
+        text("I don't want to play", 200 * resize, 400 * resize);
       }
     }
     if (state.room === "kitchen") {
@@ -248,10 +242,7 @@ function draw() {
           cinnamonRoll.stateShow = true;
         }
         cinnamonRoll.display(cinnamon);
-        if (
-          bunny.hitTest(bunnyCoordinate.x, bunnyCoordinate.y) &&
-          cinnamonRoll.stateShow === true
-        ) {
+        if (bunny.hitTest() && cinnamonRoll.stateShow === true) {
           cinnamonRoll.stateShow = false;
           cinnamonRoll.number = cinnamonRoll.number - 1;
           if (hungry.parameter < 90) {
@@ -262,16 +253,15 @@ function draw() {
         }
       }
 
-      bunnyCoordinate.x = 600;
-      bunnyCoordinate.y = 100;
       drinkButton.display(drinkButtonPicture);
-      textSize(80);
-      text(cinnamonRoll.number, 50, 400);
-      water.y = 130;
-      water.waterHeight = 270;
+      textSize(80 * resize);
+      strokeWeight(5 * resize);
+      text(cinnamonRoll.number, 50 * resize, 400 * resize);
+      water.y = 130 * resize;
+      water.waterHeight = 270 * resize;
     }
     if (state.room === "drinking") {
-      image(waterPicture, 0, 0, 1000, 600);
+      image(waterPicture, 0, 0, 1000 * resize, 600 * resize);
       water.display();
       water.rise();
       water.fall();
@@ -287,14 +277,14 @@ function draw() {
         cinnamonRoll.randomNumber.push(Math.ceil(random(-1, 9)));
         food.list.push(cinnamonRoll.foods[cinnamonRoll.randomNumber[0]]);
       }
-      image(cuttingBoardPicture, 0, 0, 1000, 600);
-      textSize(100);
-      text(food.list[0], 530, 200);
-      textSize(150);
+      image(cuttingBoardPicture, 0, 0, 1000 * resize, 600 * resize);
+      textSize(100 * resize);
+      text(food.list[0], 530 * resize, 200 * resize);
+      textSize(150 * resize);
       fill(255);
       stroke(0);
-      strokeWeight(5);
-      text(finalFoodWord, 200, 400);
+      strokeWeight(5 * resize);
+      text(finalFoodWord, 200, 400 * resize);
       if (keyIsDown(13)) {
         if (finalFoodWord === food.list[0]) {
           fill(0, 255, 0);
@@ -307,8 +297,6 @@ function draw() {
       }
     }
     if (state.room === "bathroom") {
-      bunnyCoordinate.x = 600;
-      bunnyCoordinate.y = 100;
       let poopNumber = Math.round((100 - poop.parameter) / 20);
       //https://p5js.org/examples/objects-array-of-objects.html und Hilfe von Herr Toepper
       //for (let i = 0; i < poopArray.length; i++) {
@@ -336,7 +324,43 @@ function draw() {
   }
 }
 window.draw = draw;
-
+//vgl Code von Herr Coenen
+function animation() {
+  gsap.to(moonX, {
+    duration: 2,
+    ease: "easeInQuad",
+    x: 450,
+    y: 100,
+    onComplete: () => {
+      gsap.to(moonX, {
+        duration: 3,
+        ease: "easeOutQuad",
+        x: 600,
+        y: 200,
+        onComplete: () => {
+          gsap.to(moonX, {
+            duration: 2,
+            ease: "easeInQuad",
+            x: 450,
+            y: 100,
+            onComplete: () => {
+              gsap.to(moonX, {
+                duration: 2,
+                ease: "easeInQuad",
+                x: 300,
+                y: 200,
+                onComplete: () => {
+                  animation();
+                },
+              });
+            },
+          });
+        },
+      });
+    },
+  });
+}
+animation();
 function mouseClicked() {
   if (game.state === "tutorial") {
     if (game.hitTestTriangle() && game.i < 10) {
@@ -359,22 +383,22 @@ function mouseClicked() {
   }
   if (game.state === "failed") {
     age = 0;
-    tired.parameter = 0;
-    hungry.parameter = 0;
-    poop.parameter = 0;
-    happy.parameter = 0;
-    thirsty.parameter = 0;
+    tired.parameter = 100;
+    hungry.parameter = 100;
+    poop.parameter = 100;
+    happy.parameter = 100;
+    thirsty.parameter = 100;
     if (game.hitTestButton(385)) {
       game.state = "start";
     }
   }
   if (game.state === "survived") {
     age = 0;
-    tired.parameter = 0;
-    hungry.parameter = 0;
-    poop.parameter = 0;
-    happy.parameter = 0;
-    thirsty.parameter = 0;
+    tired.parameter = 100;
+    hungry.parameter = 100;
+    poop.parameter = 100;
+    happy.parameter = 100;
+    thirsty.parameter = 100;
     if (game.hitTestButton(385)) {
       game.state = "start";
     }
