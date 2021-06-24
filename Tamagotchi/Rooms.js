@@ -1,9 +1,10 @@
 export default class Rooms {
-  constructor(x, y, state, Roomwidth, Roomheight) {
-    this.x = x;
-    this.y = y;
-    this.Roomwidth = Roomwidth;
-    this.Roomheight = Roomheight;
+  constructor(x, y, state, Roomwidth, Roomheight, resize) {
+    this.resize = resize;
+    this.x = x * this.resize;
+    this.y = y * this.resize;
+    this.Roomwidth = Roomwidth * this.resize;
+    this.Roomheight = Roomheight * this.resize;
     this.state = state;
   }
   display(
