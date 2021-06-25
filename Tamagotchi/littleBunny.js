@@ -14,7 +14,7 @@ import Game from "./Game.js";
 //import gsap from "./gsap.min.js";
 
 //variables
-let resize = 1.5;
+let resize = 2.3;
 let sadOrHappy = true;
 let food = { word: [], list: [] };
 let finalFoodWord = "";
