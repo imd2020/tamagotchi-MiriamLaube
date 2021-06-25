@@ -14,7 +14,7 @@ import Game from "./Game.js";
 //import gsap from "./gsap.min.js";
 
 //variables
-let resize = 2.3;
+let resize = 1.5;
 let sadOrHappy = true;
 let food = { word: [], list: [] };
 let finalFoodWord = "";
@@ -41,9 +41,9 @@ let ball = new Ball(300, 450, 250, 300, 0, true, 10, resize);
 let bar = new Bar(700, 130, 20, 20, resize);
 let water = new Water(240, 130, 270, 130, 400, false, resize);
 let poopArray = [];
-const moonX = {
-  x: 300,
-  y: 200,
+const zzzCoordinat = {
+  x: 300 * resize,
+  y: 300 * resize,
 };
 
 //load pictures
@@ -68,6 +68,21 @@ let happyBunny = loadImage("pictures/happyBunny.png");
 let sadBunny = loadImage("pictures/sadBunny.png");
 let cinnamon = loadImage("pictures/cinnamon.png");
 let moon = loadImage("moon.png");
+let drink = loadImage("pictures/drinkPic.png");
+let tutorial1 = loadImage("pictures/tutorial/bunnyTutorual.png");
+let tutorial2 = loadImage("pictures/tutorial/buttonTutorial.png");
+let tutorial3 = loadImage("pictures/tutorial/livingRoomTutorial.png");
+let tutorial4 = loadImage("pictures/tutorial/bedRoomTutorial.png");
+let tutorial5 = loadImage("pictures/tutorial/bathRoomTutorial.png");
+let tutorial6 = loadImage("pictures/tutorial/kitchenTutorial1.png");
+let tutorial7 = loadImage("pictures/tutorial/kitchenTutorial2.png");
+let tutorial8 = loadImage("pictures/tutorial/cuttingTutorial.png");
+let tutorial9 = loadImage("pictures/tutorial/kitchenTutorial3.png");
+let tutorial10 = loadImage("pictures/tutorial/DrinkTutorial.png");
+let start = loadImage("pictures/tutorial/playButton.png");
+let endhappy = loadImage("pictures/tutorial/youSurvived.png");
+let endsad = loadImage("pictures/tutorial/youDiedText.png");
+let zzz = loadImage("pictures/zzz.png");
 
 //https://p5js.org/examples/objects-array-of-objects.html und Hilfe von Herr Toepper
 for (let i = 0; i < 5; i++) {
@@ -89,11 +104,26 @@ function keyPressed() {
   }
   finalFoodWord = food.word.join("");
 }
+//Hilfe von Leander und Max Mittelstädt
 window.keyPressed = keyPressed;
 function draw() {
   clear();
 
-  game.display();
+  game.display(
+    tutorial1,
+    tutorial2,
+    tutorial3,
+    tutorial4,
+    tutorial5,
+    tutorial6,
+    tutorial7,
+    tutorial8,
+    tutorial9,
+    tutorial10,
+    start,
+    endhappy,
+    endsad
+  );
   if (game.state === "game") {
     //rect(0, 0, 1000 * resize, 800 * resize);
     if (age < 12 && frameCount % 1200 === 0) {
@@ -159,12 +189,14 @@ function draw() {
     }
 
     bunny.display(happyBunny, sadBunny, sleepyBunny);
-
-    //parameter
+    //button
+    image(drink, 700 * resize, 645 * resize, 40 * resize, 60 * resize);
     sleepButton.display(sleepButtonPicture);
     eatButton.display(eatButtonPicture);
     poopButton.display(poopButtonPicture);
     funButton.display(funButtonPicture);
+
+    //parameter
     tired.display();
     hungry.display();
     poop.display();
@@ -198,7 +230,7 @@ function draw() {
         if (tired.parameter < 100 && frameCount % 50 === 0) {
           tired.parameter = tired.parameter + 1;
         }
-        image(moon, moonX.x, moonX.y, 100, 100);
+        image(zzz, zzzCoordinat.x, zzzCoordinat.y, 100 * resize, 100 * resize);
         fill(60, 60, 60, 63);
         rect(0, 0, 1000 * resize, 600 * resize);
       }
@@ -232,7 +264,7 @@ function draw() {
         fill(255);
         stroke(0);
         strokeWeight(5);
-        text("I don't want to play", 200 * resize, 400 * resize);
+        text("I don't want to play", 100 * resize, 200 * resize);
       }
     }
     if (state.room === "kitchen") {
@@ -323,38 +355,23 @@ function draw() {
     game.state = "survived";
   }
 }
+//Hilfe von Leander und Max Mittelstädt
 window.draw = draw;
 //vgl Code von Herr Coenen
 function animation() {
-  gsap.to(moonX, {
+  gsap.to(zzzCoordinat, {
     duration: 2,
     ease: "easeInQuad",
-    x: 450,
-    y: 100,
+    x: 270 * resize,
+    y: 170 * resize,
     onComplete: () => {
-      gsap.to(moonX, {
+      gsap.to(zzzCoordinat, {
         duration: 3,
         ease: "easeOutQuad",
-        x: 600,
-        y: 200,
+        x: 300 * resize,
+        y: 200 * resize,
         onComplete: () => {
-          gsap.to(moonX, {
-            duration: 2,
-            ease: "easeInQuad",
-            x: 450,
-            y: 100,
-            onComplete: () => {
-              gsap.to(moonX, {
-                duration: 2,
-                ease: "easeInQuad",
-                x: 300,
-                y: 200,
-                onComplete: () => {
-                  animation();
-                },
-              });
-            },
-          });
+          animation();
         },
       });
     },
@@ -404,4 +421,5 @@ function mouseClicked() {
     }
   }
 }
+//Hilfe von Leander und Max Mittelstädt
 window.mouseClicked = mouseClicked;
