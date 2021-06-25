@@ -27,6 +27,7 @@ export default class Water {
       190 * this.resize,
       30 * this.resize
     );
+    console.log("height " + this.y + " reach " + this.destinationBottom);
     ellipse(
       this.x + 95 * this.resize,
       400 * this.resize,
@@ -39,7 +40,7 @@ export default class Water {
     if (this.y >= this.destinationTop && this.stateRise === true) {
       this.y = this.y - 5 * this.resize;
       this.waterHeight = this.waterHeight + 5 * this.resize;
-      if (this.y === this.destinationTop) {
+      if (this.y <= this.destinationTop) {
         console.log("ich mach was rise");
         this.stateRise = false;
       }
@@ -49,7 +50,7 @@ export default class Water {
     if (this.y <= this.destinationBottom && this.stateRise === false) {
       this.y = this.y + 5 * this.resize;
       this.waterHeight = this.waterHeight - 5 * this.resize;
-      if (this.y === this.destinationBottom) {
+      if (this.y >= this.destinationBottom) {
         console.log("ich mach was fall");
         this.stateRise = true;
       }
