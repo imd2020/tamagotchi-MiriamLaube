@@ -14,7 +14,7 @@ import Game from "./Game.js";
 //import gsap from "./gsap.min.js";
 
 //variables
-let resize = 2.3;
+let resize = 1;
 let sadOrHappy = true;
 let food = { word: [], list: [] };
 let finalFoodWord = "";
@@ -227,8 +227,11 @@ function draw() {
       lampCord.display(cordPicture, lampshadePicture);
       lampCord.move(moon);
       if (lampCord.day === false) {
-        if (tired.parameter < 100 && frameCount % 50 === 0) {
-          tired.parameter = tired.parameter + 1;
+        if (tired.parameter < 99 && frameCount % 50 === 0) {
+          tired.parameter = tired.parameter + 2;
+        }
+        if (tired.parameter >= 99) {
+          tired.parameter = 100;
         }
         image(zzz, zzzCoordinat.x, zzzCoordinat.y, 100 * resize, 100 * resize);
         fill(60, 60, 60, 63);
@@ -251,8 +254,11 @@ function draw() {
         thirsty.parameter >= 30
       ) {
         ball.hitTest();
-        if (frameCount % 50 === 0 && happy.parameter < 100) {
-          happy.parameter = happy.parameter + 1;
+        if (frameCount % 50 === 0 && happy.parameter < 99) {
+          happy.parameter = happy.parameter + 2;
+        }
+        if (happy.parameter >= 99) {
+          happy.parameter = 100;
         }
       } else if (
         tired.parameter < 30 ||
