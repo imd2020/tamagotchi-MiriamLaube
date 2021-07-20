@@ -14,6 +14,7 @@ import Game from "./Game.js";
 //import gsap from "./gsap.min.js";
 
 //variables
+//changed20.07.2021
 let resize = 1;
 let sadOrHappy = true;
 let food = { word: [], list: [] };
@@ -67,7 +68,8 @@ let sleepyBunny = loadImage("pictures/sleepyBunny.png");
 let happyBunny = loadImage("pictures/happyBunny.png");
 let sadBunny = loadImage("pictures/sadBunny.png");
 let cinnamon = loadImage("pictures/cinnamon.png");
-let moon = loadImage("moon.png");
+//changed20.07.2021
+let moon = loadImage("pictures/moon.png");
 let drink = loadImage("pictures/drinkPic.png");
 let tutorial1 = loadImage("pictures/tutorial/bunnyTutorual.png");
 let tutorial2 = loadImage("pictures/tutorial/buttonTutorial.png");
