@@ -4,5 +4,6 @@ body {
   background-image: url("dots.png");
   background-size: 100%;
   background-repeat: no-repeat;
-  margin-left: 45em;
+  /*changed20.07.2021*/
+  margin-left: 15em;
 }
